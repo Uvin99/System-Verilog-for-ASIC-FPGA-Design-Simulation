@@ -26,21 +26,21 @@ else state <= next_state;
 
 assign s_data = shift_reg[0];
 assign p_ready = (state == RX);   // In the receiving state
-assign s_valid = (state == Tx);   // IN the transmotting state.
+assign s_valid = (state == TX);   // IN the transmotting state.
 
 
 always_ff @(posedge clk or negedge rstn)
-if (!rstn) count <=`0;
+if (!rstn) count <='0;
 else 
     unique case (state)
     RX: begin 
         shift_reg <= p_data;
-        count <=`0;
+        count <='0;
     end
 
     TX: if (s_ready) begin 
         shift_reg <= shift_reg >> 1;
-        count <= count +1`d1;    // left shifting and c=incrementing the counter
+        count <= count + 1'd1;    // left shifting and c=incrementing the counter
     end
     endcase
 
